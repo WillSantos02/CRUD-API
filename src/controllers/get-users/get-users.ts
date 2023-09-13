@@ -12,7 +12,7 @@ export class GetUsersController implements IGetUsersController {
         body: users,
       };
     } catch (error) {
-      console.error("Error in GetUsersController:", error);
+      //console.error("Error in GetUsersController:", error);
       return {
         statusCode: 500,
         body: "Something went wrong.",
