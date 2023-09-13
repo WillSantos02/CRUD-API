@@ -13,7 +13,7 @@ const main = async () => {
 
   app.get("/users", async (req, res) => {
     const mongoGetUsersRespository = new MongoGetUsersRespository();
-    
+
     const getUsersController = new GetUsersController(mongoGetUsersRespository);
 
     const { body, statusCode } = await getUsersController.handle();
@@ -23,7 +23,9 @@ const main = async () => {
 
   const port = process.env.PORT || 8000;
 
-  app.listen(port, () => console.log(`listening on port ${port}!`));
+  app.listen(port, () =>
+    console.log(`listening on http://localhost:${port}/users`)
+  );
 };
 
 main();
