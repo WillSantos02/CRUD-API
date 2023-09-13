@@ -13,6 +13,7 @@ const main = async () => {
 
   app.get("/users", async (req, res) => {
     const mongoGetUsersRespository = new MongoGetUsersRespository();
+    
     const getUsersController = new GetUsersController(mongoGetUsersRespository);
 
     const { body, statusCode } = await getUsersController.handle();
