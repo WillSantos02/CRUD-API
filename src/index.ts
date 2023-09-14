@@ -1,10 +1,10 @@
 import express from "express";
 import { config } from "dotenv";
 import { GetUsersController } from "./controllers/get-users/get-users";
-import { MongoGetUsersRespository } from "./repositories/get-users/mongo-get-users";
+import { MongoGetUsersRepository } from "./repositories/get-users/mongo-get-users";
 import { MongoClient } from "./database/mongo";
-import { CreateUserController } from "./controllers/create-user/create-user";
 import { MongoCreateUserRepository } from "./repositories/create-user/mongo-create-user";
+import { CreateUserController } from "./controllers/create-user/create-user";
 import { MongoUpdateUserRepository } from "./repositories/update-user/mongo-update-user";
 import { UpdateUserController } from "./controllers/update-user/update-user";
 import { MongoDeleteUserRepository } from "./repositories/delete-user/mongo-delete-user";
@@ -20,9 +20,9 @@ const main = async () => {
   await MongoClient.connect();
 
   app.get("/users", async (req, res) => {
-    const mongoGetUsersRespository = new MongoGetUsersRespository();
+    const mongoGetUsersRepository = new MongoGetUsersRepository();
 
-    const getUsersController = new GetUsersController(mongoGetUsersRespository);
+    const getUsersController = new GetUsersController(mongoGetUsersRepository);
 
     const { body, statusCode } = await getUsersController.handle();
 
@@ -66,7 +66,6 @@ const main = async () => {
     );
 
     const { body, statusCode } = await deleteUserController.handle({
-      body: req.body,
       params: req.params,
     });
 
@@ -75,9 +74,7 @@ const main = async () => {
 
   const port = process.env.PORT || 8000;
 
-  app.listen(port, () =>
-    console.log(`listening on http://localhost:${port}/users`)
-  );
+  app.listen(port, () => console.log(`listening on port ${port}!`));
 };
 
 main();
