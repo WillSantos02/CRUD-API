@@ -4,6 +4,7 @@ import { User } from "../../models/user";
 import { badRequest, created, serverError } from "../helpers";
 import { HttpRequest, HttpResponse, IController } from "../protocols";
 import { CreateUserParams, ICreateUserRepository } from "./protocols";
+import PasswordValidator from "./password-validator";
 
 export class CreateUserController implements IController {
   constructor(private readonly createUserRepository: ICreateUserRepository) {}
@@ -26,11 +27,22 @@ export class CreateUserController implements IController {
         return badRequest("E-mail is invalid");
       }
 
+      const passwordValidator = new PasswordValidator();
+
+      const passwordValidationResult = await passwordValidator.passwordIsValid(
+        httpRequest.body!.password
+      );
+
+      if (typeof passwordValidationResult !== 'boolean') {
+        return passwordValidationResult;
+      }
+
       const user = await this.createUserRepository.createUser(
         httpRequest.body!
       );
 
       return created<User>(user);
+      
     } catch (error) {
       return serverError();
     }
