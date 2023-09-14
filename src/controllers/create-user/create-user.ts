@@ -1,15 +1,15 @@
-import validator from 'validator'
+import validator from "validator";
 
 import { User } from "../../models/user";
 import { HttpRequest, HttpResponse } from "../protocols";
 import {
   CreateUserParams,
   ICreateUserController,
-  ICreateUserRespository,
+  ICreateUserRepository,
 } from "./protocols";
 
 export class CreateUserController implements ICreateUserController {
-  constructor(private readonly createUserRepository: ICreateUserRespository) {}
+  constructor(private readonly createUserRepository: ICreateUserRepository) {}
 
   async handle(
     httpRequest: HttpRequest<CreateUserParams>
@@ -26,13 +26,13 @@ export class CreateUserController implements ICreateUserController {
         }
       }
 
-      const emailIsValid = validator.isEmail(httpRequest.body!.email)
+      const emailIsValid = validator.isEmail(httpRequest.body!.email);
 
-      if(!emailIsValid){
+      if (!emailIsValid) {
         return {
           statusCode: 400,
-          body: "E-mail is invalid"
-        }
+          body: "E-mail is invalid",
+        };
       }
 
       const user = await this.createUserRepository.createUser(

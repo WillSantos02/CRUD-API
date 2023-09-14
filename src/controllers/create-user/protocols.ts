@@ -14,6 +14,6 @@ export interface CreateUserParams {
   password: string;
 }
 
-export interface ICreateUserRespository {
+export interface ICreateUserRepository {
   createUser(params: CreateUserParams): Promise<User>;
 }
