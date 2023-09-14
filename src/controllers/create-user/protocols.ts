@@ -1,4 +1,5 @@
 import { User } from "../../models/user";
+import { HttpResponse } from "../protocols";
 
 export interface CreateUserParams {
   firstName: string;
@@ -9,4 +10,8 @@ export interface CreateUserParams {
 
 export interface ICreateUserRepository {
   createUser(params: CreateUserParams): Promise<User>;
+}
+
+export interface IPasswordValidator {
+  passwordIsValid(password: string): Promise<HttpResponse<string> | boolean>
 }

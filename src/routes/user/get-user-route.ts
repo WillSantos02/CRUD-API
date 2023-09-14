@@ -4,7 +4,7 @@ import { GetUsersController } from "../../controllers/get-users/get-users";
 
 const router = express.Router();
 
-router.get("/user", async (req, res) => {
+router.get("/users", async (req, res) => {
   const mongoGetUsersRepository = new MongoGetUsersRepository();
 
   const getUsersController = new GetUsersController(mongoGetUsersRepository);
